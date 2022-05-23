@@ -1,0 +1,118 @@
+<project name="kalah" default="test" basedir=".">
+  <description>
+    Supports compiling and running the JUnit 3.8-style tests for Kalah
+    for a given design, specified by -Ddesign. The source for the design
+    must be in a location specified by -Dlocation. Any libraries needed
+    should be in the location specified by -Dlibdir.
+
+    The structure of the design is that all of its source should be in
+    ${location}/${design}/src (see property ${design.src})
+    
+    Required arguments:
+    -Dlocation={path to directory containing designs}
+    -Ddesign={name of design directory}
+    -Dlibdir={path to location of lib directory with required jar files}
+
+    E.g.
+    ant -Dlibdir=../lib \
+      -Dlocation=. \
+      -Ddesign=design1001 \
+    test
+
+    Means: Run the tests on design1000, whose source can be found in
+    ../designs and any libraries in ../lib.
+
+    At any stage if the 'failures' property is set, the build will abort.
+    Information about the nature of the failure will appear in the form
+    of files created, possibly with details in the files, as follows:
+    ${nosource} - created if the file containing the entry point (${main})
+                  is not found (empty)
+    ${compilefail} - created if the design does not compile
+    ${testfail} - created if one or more tests fail.
+
+    If the design compiles and executes, output from the tests will be
+    written to ${test.output}
+  </description>
+
+  <property name="design.src"  location="${location}/${design}/src"/>
+  <property name="design.bin"  location="${location}/${design}/${design}"/>
+  <property name="main"        location="${design.src}/kalah/Kalah.java"/>
+  <property name="test.output" value="${location}/${design}/test"/>
+  <property name="testclass"   value="kalah.test.TestKalah"/>
+  <property name="nosource"    value="_nosource_.txt"/>
+  <property name="compilefail" value="_compilefailed_.txt"/>
+  <property name="testfail"    value="_failedtests_.txt"/>
+
+  <path id="classpath.lib">
+    <fileset dir="${libdir}">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
+
+  <target name="check-environment"
+	  description="Check that what's needed is available">
+    <!-- Confirm that ${main} can be accessed. -->
+    <condition property="failures">
+      <not><available file="${main}"/></not>
+    </condition>
+    <antcall target="reportfailures">
+      <param name="message" value="Cannot find ${main}"/>
+      <param name="file" value="${nosource}"/>
+    </antcall>
+  </target>
+  
+  <target name="compile" depends="check-environment"
+          description="Compile the design.">
+    <echo message="Compiling ${main}"/>
+    <mkdir dir="${design.bin}" />
+    <javac destdir="${design.bin}"
+	   listfiles="yes" debug="on" includeantruntime="false"
+	   errorProperty="failures" failonerror="false"
+	   encoding="iso-8859-1"
+	   classpathref="classpath.lib">
+      <src path="${design.src}"/>
+    </javac>
+    <antcall target="reportfailures">
+      <param name="message" value="Failed to compile ${design}"/>
+      <param name="file" value="${compilefail}"/>
+    </antcall>
+  </target>
+
+  <target name="test" depends="compile"
+	  description="Run the Kalah tests, sending output to ${test.output}">
+    <junit printsummary="no" haltonfailure="no" timeout="1000" fork="on">
+      <classpath>
+        <pathelement path="${location}/${design}/${design}"/>
+	<path refid="classpath.lib"/>
+      </classpath>
+      <formatter type="plain"/>
+      <test name="${testclass}" 
+	    haltonfailure="no"
+	    failureproperty="failures"
+	    outfile="${test.output}">
+	<formatter type="plain"/>
+      </test>
+    </junit>
+    <antcall target="reportfailures">
+      <param name="message" value="Failed tests ${design}"/>
+      <param name="file" value="${testfail}"/>
+    </antcall>
+  </target>
+
+  <target name="clean"
+          description="Get rid of all generated files.">
+    <delete includeEmptyDirs="true" failonerror="false">
+      <fileset dir="${design.bin}"/>
+      <fileset dir="${location}/${design}" includes="_**_.txt"/>
+      <fileset dir="${location}/${design}" includes="test.txt"/>
+    </delete>
+  </target>
+  
+  <target name="reportfailures" if="failures"
+	  description="Print a message if the failures property is set and
+		       fail. The file will be created in the design location">
+    <echo message="${message}"
+	  output="${location}/${design}/${file}"/>
+    <fail message="antcall reportfailures called with {${message}}"/>
+  </target>
+</project>

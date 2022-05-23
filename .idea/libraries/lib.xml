@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/javaparser-symbol-solver-core-3.23.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/failureaccess-1.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javaparser-core-3.23.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/guava-30.0-jre.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javaparser-symbol-solver-core-3.18.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javaparser-core-3.18.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javassist-3.27.0-GA.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
