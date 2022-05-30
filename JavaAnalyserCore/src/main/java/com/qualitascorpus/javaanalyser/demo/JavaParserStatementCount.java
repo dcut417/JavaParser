@@ -43,7 +43,7 @@ import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.qualitascorpus.javaanalyser.core.Analyser;
 import com.qualitascorpus.javaanalyser.core.Utility;
-import com.qualitascorpus.text.TabularOutput;
+import com.qualitascorpus.javaanalyser.text.TabularOutput;
 
 /**
  * 

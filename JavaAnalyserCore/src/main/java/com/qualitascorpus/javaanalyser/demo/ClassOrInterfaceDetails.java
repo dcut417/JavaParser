@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 
-import com.qualitascorpus.text.TabularOutput;
+import com.qualitascorpus.javaanalyser.text.TabularOutput;
 
 public class ClassOrInterfaceDetails {
 	private String _classOrInterfaceName;
