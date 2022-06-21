@@ -53,9 +53,9 @@ public class JavaParserSimpleDir {
 	 */
 	public static void listNodes(Node parent) {
 		if (parent.getComment().isPresent()) {
-			System.out.println("Parent:" + parent.getClass());
-			System.out.println("comment:" + parent.getComment());
-			System.out.println("position:" + parent.getBegin() + "-" + parent.getEnd());
+			System.out.println("Parent: " + parent.getClass());
+			System.out.println("Comment: " + parent.getComment().get().getContent());
+			//System.out.println("position:" + parent.getBegin() + "-" + parent.getEnd());
 			System.out.println();
 		}
 		for (Node child: parent.getChildNodes()) {
