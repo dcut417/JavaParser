@@ -21,12 +21,12 @@ public class JavaParserSimpleFile {
     	File sourceFile = new File("JavaAnalyserCore/src/main/resources/demo/A.java");
     	System.out.println("[[" + sourceFile.getCanonicalPath() + "]]");
     	listClasses(sourceFile);
-    	listMethodInvocations(sourceFile);
+    	//listMethodInvocations(sourceFile);
     	listNodes(sourceFile);
     	sourceFile = new File("JavaAnalyserCore/src/main/resources/demo/P.java");
     	System.out.println("[[" + sourceFile.getCanonicalPath()+ "]]");
     	listClasses(sourceFile);
-    	listMethodInvocations(sourceFile);
+    	//listMethodInvocations(sourceFile);
     	listNodes(sourceFile);
     }
     private static CompilationUnit getCompilationUnitForCode(File sourceFile) throws Exception {
@@ -77,12 +77,14 @@ public class JavaParserSimpleFile {
      * @throws Exception
      */
     public static void listNodes(Node parent) {
-    	System.out.println("Parent:" + parent.getClass());
-		System.out.println("comment:" + parent.getComment());
-		System.out.println("position:" + parent.getBegin() + "-" + parent.getEnd());
+		if (parent.getComment().isPresent()) {
+			System.out.println("Parent:" + parent.getClass());
+			System.out.println("comment:" + parent.getComment());
+			System.out.println("position:" + parent.getBegin() + "-" + parent.getEnd());
+			System.out.println();
+		}
     	for (Node child: parent.getChildNodes()) {
     		listNodes(child);
     	}
-    	System.out.println();
     }
 }
