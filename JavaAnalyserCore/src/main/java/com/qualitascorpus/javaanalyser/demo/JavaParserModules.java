@@ -61,7 +61,7 @@ public class JavaParserModules {
 				public void visit(ClassOrInterfaceType n, Object arg) {
 					super.visit(n, arg);
 					try {
-						System.out.println("ClassOrInterfaceType: " + n.resolve().getQualifiedName());
+						System.out.println("ClassOrInterfaceType: " + n.getName());
 					} catch (UnsolvedSymbolException usex) {
 						System.out.println("  -> Unrecognised:" + n.getNameAsString());
 					}
