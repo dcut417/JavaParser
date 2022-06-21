@@ -30,29 +30,18 @@ public class JavaParserSimpleDir {
 					System.out.println(" * " + n.getName());
 					System.out.println("   FQN:" + n.resolve().getQualifiedName());
 				};
-				@Override
+				/*@Override
 				public void visit(MethodCallExpr n, Object arg) {
 					super.visit(n, arg);
 					System.out.println(" method invoked " + n);
 					ResolvedMethodDeclaration rmd = n.resolve();
 					System.out.println("resolved:" + rmd);
-				};
+				};*/
 			};
 			System.out.println("CLASS DECLARATIONS");
 			visitor.visit(compilationUnit, null);
 			listNodes(compilationUnit);
 		}
-	}
-
-	private static CompilationUnit getCompilationUnitForCode(File sourceFile) throws Exception {
-		Analyser analyser = new Analyser();
-		CompilationUnit compilationUnit = analyser.getCompilationUnitForPath(sourceFile.toPath());
-		return compilationUnit;
-	}
-
-	public static void listNodes(File sourceFile) throws Exception {
-		CompilationUnit compilationUnit = getCompilationUnitForCode(sourceFile);
-		listNodes(compilationUnit);
 	}
 
 	/**
