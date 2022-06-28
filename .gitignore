@@ -27,3 +27,8 @@
 hs_err_pid*
 /bin/
 /target/
+
+#QualitasCorpus code directory
+QualitasCorpus-20130901r
+
+.DS_Store
