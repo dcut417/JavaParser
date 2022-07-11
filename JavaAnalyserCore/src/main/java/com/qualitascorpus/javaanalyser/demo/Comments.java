@@ -13,9 +13,13 @@ public class Comments {
         commentList.add(comment);
     }
 
+    public void remove(CommentDetails comment) {
+        commentList.remove(comment);
+    }
+
     public void print() {
         for (CommentDetails comment : commentList) {
-            System.out.println(comment);
+            comment.print();
         }
     }
 }

@@ -16,8 +16,10 @@ import com.qualitascorpus.javaanalyser.core.Utility;
 
 public class JavaParserSimpleDir {
 
+	private Comments comments = new Comments();
+
 	public static void main( String[] args ) throws Exception {
-		String rootPath = "JavaAnalyserCore/src/main/resources/demo/src1";
+		String rootPath = "QualitasCorpus-20130901r/Systems/argouml";
 		Analyser analyser = new Analyser();
 		analyser.addSourcePath(rootPath);
 		Set<Path> paths = Utility.findAllJavaSourceFilesFromRoots(rootPath);
@@ -28,7 +30,7 @@ public class JavaParserSimpleDir {
 				public void visit(ClassOrInterfaceDeclaration n, Object arg) {
 					super.visit(n, arg);
 					System.out.println(" * " + n.getName());
-					System.out.println("   FQN:" + n.resolve().getQualifiedName());
+					System.out.println("   FQN: " + n.resolve().getQualifiedName());
 				};
 				/*@Override
 				public void visit(MethodCallExpr n, Object arg) {
@@ -52,7 +54,7 @@ public class JavaParserSimpleDir {
 	 * @throws Exception
 	 */
 	public static void listNodes(Node parent) {
-		if (parent.getComment().isPresent()) {
+		if (parent.getComment().isPresent() && parent.getComment().get().getContent().contains("TODO")) {
 			System.out.println("Parent: " + parent.getClass());
 			String commentType;
 			if (parent.getComment().get().isBlockComment()) {
@@ -64,7 +66,7 @@ public class JavaParserSimpleDir {
 			}
 			System.out.println("Type: " + commentType);
 			System.out.println("Comment: " + parent.getComment().get().getContent());
-			//System.out.println("position:" + parent.getBegin() + "-" + parent.getEnd());
+			System.out.println("Position: " + parent.getBegin().get() + "-" + parent.getEnd().get());
 			System.out.println();
 		}
 		for (Node child: parent.getChildNodes()) {
