@@ -16,21 +16,24 @@ import com.qualitascorpus.javaanalyser.core.Utility;
 
 public class JavaParserSimpleDir {
 
-	private Comments comments = new Comments();
+	private static String currentClass;
 
 	public static void main( String[] args ) throws Exception {
 		String rootPath = "QualitasCorpus-20130901r/Systems/argouml";
 		Analyser analyser = new Analyser();
 		analyser.addSourcePath(rootPath);
 		Set<Path> paths = Utility.findAllJavaSourceFilesFromRoots(rootPath);
+		Comments comments = new Comments();
+		System.out.println("Parsing...");
 		for (Path path: paths) {
 			CompilationUnit compilationUnit = analyser.getCompilationUnitForPath(path);
 			VoidVisitor<Object> visitor = new VoidVisitorAdapter<Object>() {
 				@Override
 				public void visit(ClassOrInterfaceDeclaration n, Object arg) {
 					super.visit(n, arg);
-					System.out.println(" * " + n.getName());
-					System.out.println("   FQN: " + n.resolve().getQualifiedName());
+					//System.out.println(" * " + n.getName());
+					//System.out.println("   FQN: " + n.resolve().getQualifiedName());
+					currentClass = n.resolve().getQualifiedName();
 				};
 				/*@Override
 				public void visit(MethodCallExpr n, Object arg) {
@@ -40,10 +43,11 @@ public class JavaParserSimpleDir {
 					System.out.println("resolved:" + rmd);
 				};*/
 			};
-			System.out.println("CLASS DECLARATIONS");
+			//System.out.println("CLASS DECLARATIONS");
 			visitor.visit(compilationUnit, null);
-			listNodes(compilationUnit);
+			listNodes(comments, compilationUnit);
 		}
+		comments.print();
 	}
 
 	/**
@@ -53,9 +57,20 @@ public class JavaParserSimpleDir {
 	 * @param parent
 	 * @throws Exception
 	 */
-	public static void listNodes(Node parent) {
+	public static void listNodes(Comments comments, Node parent) {
 		if (parent.getComment().isPresent() && parent.getComment().get().getContent().contains("TODO")) {
-			System.out.println("Parent: " + parent.getClass());
+			CommentType type;
+			if (parent.getComment().get().isJavadocComment()) {
+				type = CommentType.JAVADOC;
+			} else if (parent.getComment().get().isBlockComment()) {
+				type = CommentType.BLOCK;
+			} else {
+				type = CommentType.LINE;
+			}
+			CommentDetails commentDetails = new CommentDetails(parent.getComment().get().toString(), type, parent.getBegin().get().toString(), currentClass);
+			comments.add(commentDetails);
+
+			/* System.out.println("Parent: " + parent.getClass());
 			String commentType;
 			if (parent.getComment().get().isBlockComment()) {
 				commentType = "Block";
@@ -67,10 +82,10 @@ public class JavaParserSimpleDir {
 			System.out.println("Type: " + commentType);
 			System.out.println("Comment: " + parent.getComment().get().getContent());
 			System.out.println("Position: " + parent.getBegin().get() + "-" + parent.getEnd().get());
-			System.out.println();
+			System.out.println();*/
 		}
 		for (Node child: parent.getChildNodes()) {
-			listNodes(child);
+			listNodes(comments, child);
 		}
 	}
 }

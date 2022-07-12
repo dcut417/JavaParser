@@ -19,7 +19,9 @@ public class Comments {
 
     public void print() {
         for (CommentDetails comment : commentList) {
+            System.out.println(commentList.indexOf(comment));
             comment.print();
         }
+        System.out.println("Comment Count = " + commentList.size());
     }
 }

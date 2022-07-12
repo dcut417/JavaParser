@@ -9,17 +9,22 @@ public class CommentDetails {
 
     private CommentType _type;
 
-    private int _lineNumber;
+    private String _position;
 
     private String _fullyQualifiedName;
 
     private List<SATDClassification> _classifications = new ArrayList<SATDClassification>();
 
-    public CommentDetails(String comment, CommentType type, int lineNumber, String fqn) {
+    public CommentDetails(String comment, CommentType type, String position, String fqn) {
         _comment = comment;
         _type = type;
-        _lineNumber = lineNumber;
+        _position = position;
         _fullyQualifiedName = fqn;
+        classify();
+    }
+
+    private void classify() {
+
     }
 
     public String getComment() {
@@ -30,8 +35,8 @@ public class CommentDetails {
         return _type;
     }
 
-    public int getLineNumber() {
-        return _lineNumber;
+    public String getPosition() {
+        return _position;
     }
 
     public String getFQN() {
@@ -50,7 +55,7 @@ public class CommentDetails {
         System.out.println("Class: " + _fullyQualifiedName);
         System.out.println("Type: " + _type);
         System.out.println("Comment: " + _comment);
-        System.out.println("Line Number: " + _lineNumber);
+        System.out.println("Position: " + _position);
         System.out.println("Classifications: " + classificationsToString());
         System.out.println();
     }
