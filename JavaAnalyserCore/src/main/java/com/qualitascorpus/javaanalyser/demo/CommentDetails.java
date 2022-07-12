@@ -2,6 +2,7 @@ package com.qualitascorpus.javaanalyser.demo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CommentDetails {
 
@@ -24,7 +25,20 @@ public class CommentDetails {
     }
 
     private void classify() {
-
+        String comment = _comment.toLowerCase(Locale.ROOT);
+        if (comment.contains("add") || comment.contains("temporary") || comment.contains("support") || comment.contains("needs")) {
+            _classifications.add(SATDClassification.REQUIREMENT);
+        }
+        if (comment.contains("comment")) {
+            _classifications.add(SATDClassification.DOCUMENTATION);
+        }
+        if (comment.contains("move") || comment.contains("review")) {
+            _classifications.add(SATDClassification.DESIGN);
+            _classifications.add(SATDClassification.ARCHITECTURAL);
+        }
+        if (comment.contains("fix") || comment.contains("correct")) {
+            _classifications.add(SATDClassification.DEFECT);
+        }
     }
 
     public String getComment() {
@@ -56,18 +70,18 @@ public class CommentDetails {
         System.out.println("Type: " + _type);
         System.out.println("Comment: " + _comment);
         System.out.println("Position: " + _position);
-        System.out.println("Classifications: " + classificationsToString());
+        System.out.println("Classification(s): " + classificationsToString());
         System.out.println();
     }
 
     private String classificationsToString() {
-        String all = "";
-        for (SATDClassification classification: _classifications) {
-            all = all.concat(classification.toString() + ", ");
-        }
-        if (all.isEmpty()) {
+        if (_classifications.isEmpty()) {
             return "None";
         } else {
+            String all = "";
+            for (SATDClassification classification: _classifications) {
+                all = all.concat(classification.toString() + ", ");
+            }
             return all;
         }
     }
