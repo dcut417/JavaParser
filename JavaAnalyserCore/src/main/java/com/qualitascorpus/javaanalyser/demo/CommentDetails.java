@@ -25,19 +25,37 @@ public class CommentDetails {
     }
 
     private void classify() {
-        String comment = _comment.toLowerCase(Locale.ROOT);
-        if (comment.contains("add") || comment.contains("temporary") || comment.contains("support") || comment.contains("needs")) {
+        String comment = _comment.substring(_comment.indexOf("TODO")).toLowerCase(Locale.ROOT);
+        if (comment.contains("add") || comment.contains("temporary") || comment.contains("support") || comment.contains("need")
+                || comment.contains("also") || comment.contains("handle") || comment.contains("auto-generated")
+                || comment.contains("use") || comment.contains("implement")) {
             _classifications.add(SATDClassification.REQUIREMENT);
         }
-        if (comment.contains("comment")) {
+        if (comment.contains("comment") || comment.contains("description")) {
             _classifications.add(SATDClassification.DOCUMENTATION);
         }
-        if (comment.contains("move") || comment.contains("review")) {
+        if (comment.contains("move") || comment.contains("review") || comment.contains("change") || comment.contains("refactor")
+                || comment.contains("lazy") || comment.contains("remove") || comment.contains("mess")
+                || comment.contains("really") || comment.contains("why") || comment.contains("belong")
+                || comment.contains("better")) {
             _classifications.add(SATDClassification.DESIGN);
             _classifications.add(SATDClassification.ARCHITECTURAL);
         }
-        if (comment.contains("fix") || comment.contains("correct")) {
+        if (comment.contains("fix") || comment.contains("correct") || comment.contains("right") || comment.contains("work")
+                || comment.contains("should not")) {
             _classifications.add(SATDClassification.DEFECT);
+        }
+        if (comment.contains("merge") || comment.contains("version")) {
+            _classifications.add(SATDClassification.VERSIONING);
+        }
+        if (comment.contains("test")) {
+            _classifications.add(SATDClassification.TEST);
+        }
+        if (comment.contains("clone")) {
+            _classifications.add(SATDClassification.CODE);
+        }
+        if (comment.contains("refactor")) {
+            _classifications.add(SATDClassification.BUILD);
         }
     }
 
