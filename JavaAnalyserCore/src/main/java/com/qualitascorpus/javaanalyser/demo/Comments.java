@@ -80,8 +80,8 @@ public class Comments {
         System.out.println("Requirement: " + requirementCount);
         System.out.println("Test: " + testCount);
         System.out.println("Architectural: " + architecturalCount);
-        System.out.println("Code: " + codeCount);
         System.out.println("Build: " + buildCount);
+        System.out.println("Code: " + codeCount);
         System.out.println("Infrastructure: " + infrastructureCount);
         System.out.println("Versioning: " + versioningCount);
         System.out.println("Unclassified: " + noneCount);

@@ -16,10 +16,10 @@ import com.qualitascorpus.javaanalyser.core.Utility;
 
 public class JavaParserSimpleDir {
 
-	private static String currentClass;
+	private static String currentClass = "";
 
 	public static void main( String[] args ) throws Exception {
-		String rootPath = "QualitasCorpus-20130901r/Systems/argouml";
+		String rootPath = "QualitasCorpus-20130901r/Systems/ant";
 		Analyser analyser = new Analyser();
 		analyser.addSourcePath(rootPath);
 		Set<Path> paths = Utility.findAllJavaSourceFilesFromRoots(rootPath);
@@ -33,7 +33,7 @@ public class JavaParserSimpleDir {
 					super.visit(n, arg);
 					//System.out.println(" * " + n.getName());
 					//System.out.println("   FQN: " + n.resolve().getQualifiedName());
-					currentClass = n.resolve().getQualifiedName();
+					//currentClass = n.resolve().getQualifiedName();
 				};
 				/*@Override
 				public void visit(MethodCallExpr n, Object arg) {
@@ -58,7 +58,7 @@ public class JavaParserSimpleDir {
 	 * @throws Exception
 	 */
 	public static void listNodes(Comments comments, Node parent) {
-		if (parent.getComment().isPresent() && parent.getComment().get().getContent().contains("TODO")) {
+		if (parent.getComment().isPresent() && (parent.getComment().get().getContent().contains("TODO") || parent.getComment().get().getContent().contains("FIXME"))) {
 			CommentType type;
 			if (parent.getComment().get().isJavadocComment()) {
 				type = CommentType.JAVADOC;

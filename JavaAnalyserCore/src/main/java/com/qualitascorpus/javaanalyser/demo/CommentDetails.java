@@ -25,7 +25,12 @@ public class CommentDetails {
     }
 
     private void classify() {
-        String comment = _comment.substring(_comment.indexOf("TODO")).toLowerCase(Locale.ROOT);
+        String comment;
+        if (_comment.contains("TODO")) {
+            comment = _comment.substring(_comment.indexOf("TODO")).toLowerCase(Locale.ROOT);
+        } else {
+            comment = _comment.toLowerCase(Locale.ROOT);
+        }
         if (comment.contains("add") || comment.contains("temporary") || comment.contains("support") || comment.contains("need")
                 || comment.contains("also") || comment.contains("handle") || comment.contains("auto-generated")
                 || comment.contains("use") || comment.contains("implement")) {
@@ -51,7 +56,7 @@ public class CommentDetails {
         if (comment.contains("test")) {
             _classifications.add(SATDClassification.TEST);
         }
-        if (comment.contains("clone")) {
+        if (comment.contains("clone") || comment.contains("duplicate")) {
             _classifications.add(SATDClassification.CODE);
         }
         if (comment.contains("refactor")) {
