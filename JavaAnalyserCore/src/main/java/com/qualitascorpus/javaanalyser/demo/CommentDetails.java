@@ -33,21 +33,26 @@ public class CommentDetails {
         }
         if (comment.contains("add") || comment.contains("temporary") || comment.contains("support") || comment.contains("need")
                 || comment.contains("also") || comment.contains("handle") || comment.contains("auto-generated")
-                || comment.contains("use") || comment.contains("implement")) {
+                || comment.contains("use ") || comment.contains("implement ") || comment.contains("accomodate")
+                || comment.contains("introduce") || comment.contains("extend")) {
             _classifications.add(SATDClassification.REQUIREMENT);
         }
         if (comment.contains("comment") || comment.contains("description")) {
             _classifications.add(SATDClassification.DOCUMENTATION);
         }
-        if (comment.contains("move") || comment.contains("review") || comment.contains("change") || comment.contains("refactor")
+        if (comment.contains("move") || comment.contains("review") || comment.contains("change")
+                || comment.contains("refactor") || comment.contains("obsolete") || comment.contains("do we")
                 || comment.contains("lazy") || comment.contains("remove") || comment.contains("mess")
                 || comment.contains("really") || comment.contains("why") || comment.contains("belong")
-                || comment.contains("better")) {
+                || comment.contains("better") || comment.contains("hack") || comment.contains("improve")
+                || comment.contains("nasty") || comment.contains("consider") || comment.contains("replace")
+                || comment.contains("review") || comment.contains("clean") || comment.contains("check")) {
             _classifications.add(SATDClassification.DESIGN);
             _classifications.add(SATDClassification.ARCHITECTURAL);
         }
         if (comment.contains("fix") || comment.contains("correct") || comment.contains("right") || comment.contains("work")
-                || comment.contains("should not")) {
+                || comment.contains("should not") || comment.contains("issue") || comment.contains("fail")
+                || comment.contains("error")) {
             _classifications.add(SATDClassification.DEFECT);
         }
         if (comment.contains("merge") || comment.contains("version")) {

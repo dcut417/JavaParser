@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import com.github.javaparser.JavaParser;
@@ -63,7 +64,13 @@ public class Analyser {
 		ParserConfiguration configuration = new ParserConfiguration().setSymbolResolver(new JavaSymbolSolver(_typeSolver));
 		JavaParser parser = new JavaParser(configuration);
 		ParseResult<CompilationUnit> parseResult = parser.parse(path);
-		CompilationUnit compilationUnit = parseResult.getResult().get();	
-		_asts.put(path,  compilationUnit);
+		Optional<CompilationUnit> optional = parseResult.getResult();
+		if (optional.isPresent()) {
+			CompilationUnit compilationUnit = optional.get();	//test to make sure theres something there
+			_asts.put(path,  compilationUnit);
+		} else {
+			System.out.println("Parse failed");
+		}
+
 	}
 }

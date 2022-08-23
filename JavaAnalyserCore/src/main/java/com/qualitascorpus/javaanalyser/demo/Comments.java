@@ -86,4 +86,8 @@ public class Comments {
         System.out.println("Versioning: " + versioningCount);
         System.out.println("Unclassified: " + noneCount);
     }
+
+    public int getSize() {
+        return commentList.size();
+    }
 }
