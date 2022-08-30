@@ -69,7 +69,7 @@ public class Analyser {
 			CompilationUnit compilationUnit = optional.get();	//test to make sure theres something there
 			_asts.put(path,  compilationUnit);
 		} else {
-			System.out.println("Parse failed");
+			System.out.println("No compilation unit found");
 		}
 
 	}

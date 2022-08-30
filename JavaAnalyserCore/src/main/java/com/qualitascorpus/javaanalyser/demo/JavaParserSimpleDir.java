@@ -7,6 +7,7 @@ import java.util.Set;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.comments.Comment;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
@@ -19,13 +20,15 @@ public class JavaParserSimpleDir {
 	private static String currentClass = "";
 
 	public static void main( String[] args ) throws Exception {
-		String rootPath = "QualitasCorpus-20130901r/Systems/ant";
+		String rootPath = "QualitasCorpus-20130901r/Systems/roller";
 		Analyser analyser = new Analyser();
 		analyser.addSourcePath(rootPath);
 		Set<Path> paths = Utility.findAllJavaSourceFilesFromRoots(rootPath);
 		Comments comments = new Comments();
 		System.out.println("Parsing...");
 		for (Path path: paths) {
+			//System.out.println(path);
+			//System.out.println(comments.getSize());
 			CompilationUnit compilationUnit = analyser.getCompilationUnitForPath(path);
 			VoidVisitor<Object> visitor = new VoidVisitorAdapter<Object>() {
 				@Override
@@ -44,8 +47,10 @@ public class JavaParserSimpleDir {
 				};*/
 			};
 			//System.out.println("CLASS DECLARATIONS");
-			visitor.visit(compilationUnit, null);
-			listNodes(comments, compilationUnit);
+			if (compilationUnit != null) {
+				visitor.visit(compilationUnit, null);
+				listNodes(comments, compilationUnit);
+			}
 		}
 		comments.print();
 	}
@@ -83,6 +88,14 @@ public class JavaParserSimpleDir {
 			System.out.println("Comment: " + parent.getComment().get().getContent());
 			System.out.println("Position: " + parent.getBegin().get() + "-" + parent.getEnd().get());
 			System.out.println();*/
+		}
+		if (!parent.getOrphanComments().isEmpty()) {
+			for (Comment orphan: parent.getOrphanComments()) {
+				if (orphan.getContent().contains("TODO") || orphan.getContent().contains("FIXME")) {
+					comments.add(new CommentDetails(orphan.getContent(), CommentType.ORPHAN, parent.getBegin().get().toString(), currentClass));
+					System.out.println("Orphan comment added");
+				}
+			}
 		}
 		for (Node child: parent.getChildNodes()) {
 			listNodes(comments, child);

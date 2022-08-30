@@ -34,7 +34,7 @@ public class CommentDetails {
         if (comment.contains("add") || comment.contains("temporary") || comment.contains("support") || comment.contains("need")
                 || comment.contains("also") || comment.contains("handle") || comment.contains("auto-generated")
                 || comment.contains("use ") || comment.contains("implement ") || comment.contains("accomodate")
-                || comment.contains("introduce") || comment.contains("extend")) {
+                || comment.contains("introduce") || comment.contains("extend") || comment.contains("set up")) {
             _classifications.add(SATDClassification.REQUIREMENT);
         }
         if (comment.contains("comment") || comment.contains("description")) {
