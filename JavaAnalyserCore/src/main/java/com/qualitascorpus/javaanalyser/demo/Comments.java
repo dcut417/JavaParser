@@ -37,7 +37,11 @@ public class Comments {
         int buildCount = 0;
         int infrastructureCount = 0;
         int versioningCount = 0;
+        int unclearCount = 0;
         int noneCount = 0;
+        int designArchitectural = 0;
+        int designBuild = 0;
+        int designCode = 0;
         for (CommentDetails comment : commentList) {
             List<SATDClassification> classList = comment.getClassifications();
             if (classList.contains(SATDClassification.DESIGN)) {
@@ -70,8 +74,20 @@ public class Comments {
             if (classList.contains(SATDClassification.VERSIONING)) {
                 versioningCount++;
             }
+            if (classList.contains(SATDClassification.UNCLEAR)) {
+                unclearCount++;
+            }
             if (classList.isEmpty()) {
                 noneCount++;
+            }
+            if (classList.contains(SATDClassification.DESIGN) && classList.contains(SATDClassification.ARCHITECTURAL)) {
+                designArchitectural++;
+            }
+            if (classList.contains(SATDClassification.DESIGN) && classList.contains(SATDClassification.BUILD)) {
+                designBuild++;
+            }
+            if (classList.contains(SATDClassification.DESIGN) && classList.contains(SATDClassification.CODE)) {
+                designCode++;
             }
         }
         System.out.println("Design: " + designCount);
@@ -84,7 +100,12 @@ public class Comments {
         System.out.println("Code: " + codeCount);
         System.out.println("Infrastructure: " + infrastructureCount);
         System.out.println("Versioning: " + versioningCount);
+        System.out.println("Unclear: " + unclearCount);
         System.out.println("Unclassified: " + noneCount);
+
+        System.out.println("Design + Architectural: " + designArchitectural);
+        System.out.println("Design + Build: " + designBuild);
+        System.out.println("Design + Code: " + designCode);
     }
 
     public int getSize() {

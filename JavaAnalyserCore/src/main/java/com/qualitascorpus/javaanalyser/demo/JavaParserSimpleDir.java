@@ -18,17 +18,20 @@ import com.qualitascorpus.javaanalyser.core.Utility;
 public class JavaParserSimpleDir {
 
 	private static String currentClass = "";
+	private static int commentCount = 0;
 
 	public static void main( String[] args ) throws Exception {
-		String rootPath = "QualitasCorpus-20130901r/Systems/roller";
+		String rootPath = "QualitasCorpus-20130901r/Systems/argouml";
 		Analyser analyser = new Analyser();
 		analyser.addSourcePath(rootPath);
 		Set<Path> paths = Utility.findAllJavaSourceFilesFromRoots(rootPath);
 		Comments comments = new Comments();
 		System.out.println("Parsing...");
+		int classcount = 0;
 		for (Path path: paths) {
 			//System.out.println(path);
 			//System.out.println(comments.getSize());
+			classcount++;
 			CompilationUnit compilationUnit = analyser.getCompilationUnitForPath(path);
 			VoidVisitor<Object> visitor = new VoidVisitorAdapter<Object>() {
 				@Override
@@ -53,6 +56,7 @@ public class JavaParserSimpleDir {
 			}
 		}
 		comments.print();
+		System.out.println("Number of classes: " + classcount);
 	}
 
 	/**
@@ -93,7 +97,7 @@ public class JavaParserSimpleDir {
 			for (Comment orphan: parent.getOrphanComments()) {
 				if (orphan.getContent().contains("TODO") || orphan.getContent().contains("FIXME")) {
 					comments.add(new CommentDetails(orphan.getContent(), CommentType.ORPHAN, parent.getBegin().get().toString(), currentClass));
-					System.out.println("Orphan comment added");
+					//System.out.println("Orphan comment added");
 				}
 			}
 		}
