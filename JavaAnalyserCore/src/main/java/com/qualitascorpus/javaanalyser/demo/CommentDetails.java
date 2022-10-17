@@ -101,9 +101,9 @@ public class CommentDetails {
         if (comment.contains("refactor") || comment.contains("complex") || comment.contains("complicated")) {
             _classifications.add(SATDClassification.BUILD);
         }
-        if (_comment.length() < 8) {
+        /*if (_comment.length() < 8) {
             _classifications.add(SATDClassification.UNCLEAR);
-        }
+        }*/
     }
 
     public String getComment() {
