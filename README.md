@@ -1,12 +1,25 @@
 # JavaAnalyserCore
 
-This project (currently) provides a exploration of how to use the Java
+This project (currently) provides an exploration of how to use the Java
 parsing system [JavaParser](https://javaparser.org).
 
-There is incomplete code in the project, but the most useful code is
- a bunch of little test programs in the
+Instructions for running the code can be found in the project compendium report.
+
+The template code in this project was provided by supervisor Ewan Tempero. I (Daniel Cutfield) built upon these to provide the functionality
+that is most useful to the project. The files are located in the
 `com.qualitascorpus.javaanalyser.demo` package (under
-`JavaAnalyserCore/src/main/java`). They demonstrate slightly different things at difference levels of complexity. The most useful order to look at them is described in the [package](JavaAnalyserCore/src/main/java/com/qualitascorpus/javaanalyser/demo/package.html) file.
+`JavaAnalyserCore/src/main/java`). They demonstrate slightly different things at different levels of complexity. 
+To understand JavaParser, the most useful order to look at them is described in the [package](JavaAnalyserCore/src/main/java/com/qualitascorpus/javaanalyser/demo/package.html) file.
+The main file for my project is JavaParserSimpleDir.java (File Provided by Ewan Tempero, Edited by Daniel Cutfield). 
+Other files that are used in this project are
+- Analyser.java (Provided by Ewan Tempero, slightly edited by Daniel Cutfield)
+- Utility.java (Provided by Ewan Tempero)
+- CommentDetails.java (Written by Daniel Cutfield)
+- Comments.java (Written by Daniel Cutfield)
+- CommentType.java (Written by Daniel Cutfield)
+- CompilationUnitDetails.java (Provided by Ewan Tempero)
+- SATDClassification.java (Written by Daniel Cutfield)
+- All other files were provided by Ewan Tempero
 
 ### Project Contents
 
@@ -30,7 +43,7 @@ The contents are:
 
 #### Design details
 
-Each design directory contains the source code for the design, plus some measurements for various metics for each design (in `METADATA`). Provided for completeness.
+Each design directory contains the source code for the design, plus some measurements for various metrics for each design (in `METADATA`). Provided for completeness.
 
 ### JavaParser Documentation
 
