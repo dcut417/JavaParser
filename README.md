@@ -3,8 +3,6 @@
 This project (currently) provides an exploration of how to use the Java
 parsing system [JavaParser](https://javaparser.org).
 
-Instructions for running the code can be found in the project compendium report.
-
 The template code in this project was provided by supervisor Ewan Tempero. I (Daniel Cutfield) built upon these to provide the functionality
 that is most useful to the project. The files are located in the
 `com.qualitascorpus.javaanalyser.demo` package (under
@@ -85,3 +83,4 @@ JavaParser depends on other projects, but Maven will handled downloading them. T
 
 1. Most IDEs will support importing Maven projects. That saves having to specify the `jar` files. It might work to just import the JavaAnalyserCore project, but this hasn't been tested (feel free to use the provided `pom.xml` file as a starting point your own project if you intend to use Maven.
 
+In depth instructions for running the code can be found in the project compendium report.
